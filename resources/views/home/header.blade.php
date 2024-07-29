@@ -16,7 +16,7 @@
                         <a class="nav-link" href="{{ route('all_products') }}">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
+                        <a class="nav-link" href="{{ route('contact') }}">Contact</a>
                     </li>
                     <li class="nav-item">
                         @if (Route::has('login'))
@@ -50,10 +50,26 @@
                     </form>
                     @if (Route::has('login'))
                         @auth
-                            <li class="nav-item">
-                                <x-app-layout>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ auth()->user()->name }}
+                                </a>
 
-                                </x-app-layout>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('profile.show') }}">
+                                        <i class="fa fa-user"></i> {{ __('Profile') }}
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="fa fa-sign-out"></i> {{ __('Log Out') }}
+                                        </button>
+                                    </form>
+                                </div>
                             </li>
                         @else
                             <li class="nav-item">
@@ -64,6 +80,7 @@
                             </li>
                         @endauth
                     @endif
+
                 </ul>
             </div>
         </nav>

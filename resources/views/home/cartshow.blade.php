@@ -84,7 +84,7 @@
                         @endphp
                     @empty
                         <tr class="">
-                            <td colspan="6" class="text-center text-white">No data Found</td>
+                            <td colspan="6 mt-5" class="text-center text-white">No data Found</td>
                         </tr>
                     @endforelse
                     <tr>

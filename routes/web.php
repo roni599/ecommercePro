@@ -60,4 +60,5 @@ Route::post('add_comment', [HomeController::class,'add_comment'])->name('add_com
 Route::post('add_reply', [HomeController::class,'add_reply'])->name('add_reply');
 Route::get('search_product', [HomeController::class,'search_product'])->name('search_product');
 Route::get('all_products', [HomeController::class,'all_products'])->name('all_products');
+Route::get('contact', [HomeController::class,'contact'])->name('contact');
 Route::get('product_search', [HomeController::class,'product_search'])->name('product_search');

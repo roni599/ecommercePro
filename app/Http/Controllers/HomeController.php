@@ -23,20 +23,22 @@ class HomeController extends Controller
             $id = Auth::user()->id;
             $carts = cart::where('user_id', '=', $id)->get();
             $products = Product::paginate(6);
-            return view('home.userpage', compact('carts','products'));
+            return view('home.userpage', compact('carts', 'products'));
         } else {
             $products = Product::paginate(6);
             return view('home.userpage', compact('products'));
         }
     }
-    public function cart_details(){
+    public function cart_details()
+    {
         $carts = cart::where('user_id', '=', 5)->get();
         return response()->json($carts);
     }
     public function redirect()
     {
         $usertype = Auth::user()->usertype;
-        if ($usertype == '1') {
+
+        if ($usertype === '1') {
             $products = Product::all()->count();
             $orders = Order::all()->count();
             $customers = User::all()->count();
@@ -53,6 +55,7 @@ class HomeController extends Controller
             $id = Auth::user()->id;
             $carts = cart::where('user_id', '=', $id)->get();
             // $carts = Cart::all();
+
             return view('home.userpage', compact('products', 'carts'));
         }
     }
@@ -63,7 +66,13 @@ class HomeController extends Controller
         $carts = cart::where('user_id', '=', $id)->get();
         $comment = Comment::where('product_id', '=', $id)->orderby('id', 'desc')->get();
         $reply = Reply::all();
-        return view('home.product_details', compact('product', 'comment', 'reply','carts'));
+        return view('home.product_details', compact('product', 'comment', 'reply', 'carts'));
+    }
+
+    public function contact()
+    {
+        $carts = collect();
+        return view('home.contact', compact('carts'));
     }
 
     public function add_cart(Request $request, $id)
@@ -84,7 +93,7 @@ class HomeController extends Controller
                     $cart->price = $product->product_price * $cart->quentity;
                 }
                 $cart->save();
-                Alert::success('Product Added successfully','We have added product to the cart');
+                Alert::success('Product Added successfully', 'We have added product to the cart');
                 return redirect()->back();
             } else {
                 $cart = new Cart();
@@ -105,7 +114,7 @@ class HomeController extends Controller
                 $cart->product_id = $product->id;
                 $cart->user_id = $user->id;
                 $cart->save();
-                Alert::success('Product Added successfully','We have added product to the cart');
+                Alert::success('Product Added successfully', 'We have added product to the cart');
                 return redirect()->back();
             }
         } else {
@@ -128,7 +137,7 @@ class HomeController extends Controller
     {
         $cart = Cart::find($id);
         $cart->delete();
-        Alert::success('Product Removed','We have remove a product from the cart');
+        Alert::success('Product Removed', 'We have remove a product from the cart');
         return redirect()->back();
     }
 
@@ -263,19 +272,39 @@ class HomeController extends Controller
         $id = Auth::user()->id;
         $carts = cart::where('user_id', '=', $id)->get();
         $products = Product::where('product_title', 'LIKE', "%$serarch_text%")->paginate(10);
-        
-        return view('home.userpage', compact('products','carts'));
 
+        return view('home.userpage', compact('products', 'carts'));
     }
+
+    // public function all_products()
+    // {
+    //     $products = Product::paginate(6);
+    //     // $carts = Cart::all();
+
+
+    //     if ($id = Auth::user()->id) {
+    //         $carts = cart::where('user_id', '=', $id)->get();
+    //         return view('home.all_priduct', compact('products', 'carts'));
+    //     } else {
+    //         return redirect()->back();
+    //     }
+    // }
+
 
     public function all_products()
     {
         $products = Product::paginate(6);
-        // $carts = Cart::all();
-        $id = Auth::user()->id;
-        $carts = cart::where('user_id', '=', $id)->get();
-        return view('home.all_priduct', compact('products', 'carts'));
+
+        if (Auth::check()) {
+            $id = Auth::user()->id;
+            $carts = Cart::where('user_id', '=', $id)->get();
+            return view('home.all_priduct', compact('products', 'carts'));
+        } else {
+            $carts = collect();
+            return view('home.all_priduct', compact('products', 'carts'));
+        }
     }
+
 
     public function product_search(Request $request)
     {
@@ -283,6 +312,6 @@ class HomeController extends Controller
         $id = Auth::user()->id;
         $carts = cart::where('user_id', '=', $id)->get();
         $products = Product::where('product_title', 'LIKE', "%$serarch_text%")->paginate(10);
-        return view('home.all_priduct', compact('products','carts'));
+        return view('home.all_priduct', compact('products', 'carts'));
     }
 }
