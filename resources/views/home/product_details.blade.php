@@ -11,9 +11,8 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <link rel="shortcut icon" href="{{ asset('ui/frontend') }}/{{ asset('ui/frontend') }}/images/favicon.png"
-        type="">
-    <title>Famms - Fashion HTML Template</title>
+    <link rel="shortcut icon" href="{{ asset('ui/frontend') }}/images/favicon.png" type="">
+    <title>ecommerce_product_details</title>
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('ui/frontend') }}/css/bootstrap.css" />
     <!-- font awesome style -->

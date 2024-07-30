@@ -18,18 +18,18 @@
                 </div>
                 <div class="known">
                     <div class="details mt-0">
-                        <h2 class="mb-1 h2">Product Title : {{ $product->product_title }}</h2>
-                        <p class="mb-1"><a href="url">Product Description : {{ $product->prouct_description }}</a>
+                        <h2 class="mb-1 h2 fw-bold">Product Title : {{ $product->product_title }}</h2>
+                        <p class="mb-1"><p  style="color:blue">Product Description : {{ $product->prouct_description }}</p>
                         </p>
-                        <p class="mb-1">Category : <a href="url">{{ $product->product_category }}</a></p>
+                        <p class="mb-1 d-inline" style="color:blue">Category : <p class="d-inline" style="color:blue">{{ $product->product_category }}</p></p>
                         @if ($product->product_discount != null)
-                            <p class="mb-1" style="text-decoration: line-through; color:blue">Price : <a
-                                    href="url">${{ $product->product_price }}</a></p>
-                            <p class="mb-1" style=" color:red">Discount Price : <a
-                                    href="url">${{ $product->product_discount }}</a></p>
+                            <p class="mb-1 d-inline" style="text-decoration: line-through; color:blue">Price : <p
+                               class=" d-inline" style="color:blue">${{ $product->product_price }}</p></p>
+                            <p class="mb-1 d-inline" style=" color:red">Discount Price : <p
+                                   class="d-inline"style="color:blue" >${{ $product->product_discount }}</p></p>
                         @else
-                            <p class="mb-1" style="color:blue">Price : <a
-                                    href="url">${{ $product->product_price }}</a></p>
+                            <p class="mb-1 d-inline" style="color:blue">Price : <p
+                                    class="d-inline" style="color:blue">${{ $product->product_price }}</p></p>
                             <p style="color: red">No Discount Available</p>
                         @endif
 

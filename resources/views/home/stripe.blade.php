@@ -23,8 +23,8 @@
 
 <body>
     @include('home.header')
-    <div class="container mt-3">
-        <h1 class="h2 text-center">Payment Using Your Card -Amount at ${{ $total }}</h1>
+    <div class="container mt-3 ">
+        <h4 class="text-center mt-1 mb-3 text-success fw-bold">Payment Using Your Card - Amount at ${{ $total }}</h4>
         <div class="row">
             <div class="col-md-6 m-auto">
                 <div class="card">

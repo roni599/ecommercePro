@@ -13,7 +13,7 @@
     <meta name="author" content="" />
     <link rel="shortcut icon" href="{{ asset('ui/frontend') }}/{{ asset('ui/frontend') }}/images/favicon.png"
         type="">
-    <title>Famms - Fashion HTML Template</title>
+    <title>ecommercePro_cartshow_page</title>
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('ui/frontend') }}/css/bootstrap.css" />
     <!-- font awesome style -->
@@ -95,8 +95,14 @@
             </table>
             <div class="button text-center">
                 <h1 class="mb-2 h5">Procced To Pay</h1>
-                <a href="{{ route('cash_order') }}" class="btn btn-sm btn-danger">Cash on delevary</a>
-                <a href="{{ route('stripe', $total) }}" class="btn btn-sm btn-danger">Pay using Card</a>
+                <a href="{{ route('cash_order') }}" class="btn btn-sm btn-danger p-3">Cash on delevary</a>
+                <a href="{{ route('stripe', $total) }}" class="btn btn-sm btn-danger p-3">Pay using Card</a>
+                <a href="{{ route('stripe', $total) }}" class="btn btn-sm border tt">
+                    <img src="{{ asset('ui/frontend/images/bkash.png') }}" alt="" class="" width="110" height="47">
+                </a>
+                {{-- <a href="{{ route('stripe', $total) }}" class="btn btn-sm btn-danger p-3 d-flex align-items-center justify-content-center">
+                    <img src="{{ asset('ui/frontend/images/bkash.png') }}" alt="" class="" width="110" height="47">
+                </a> --}}
             </div>
         @else
             @if (session()->has('message'))
