@@ -81,7 +81,7 @@
             </a>
         </li>
 
-        <li class="nav-item menu-items">
+        <li class="nav-item menu-items mb-2">
             <a class="nav-link"  href="{{ route('show_products') }}">
                 <span class="menu-icon">
                     <i class="mdi mdi-playlist-play"></i>
@@ -90,7 +90,7 @@
             </a>
         </li>
 
-        <li class="nav-item menu-items">
+        <li class="nav-item menu-items mb-2">
             <a class="nav-link" href="{{ route('view_category') }}">
                 <span class="menu-icon">
                     <i class="mdi mdi-playlist-play"></i>
@@ -98,7 +98,7 @@
                 <span class="menu-title">Category</span>
             </a>
         </li>
-        <li class="nav-item menu-items">
+        <li class="nav-item menu-items mb-2">
             <a class="nav-link" href="{{ route('order_details') }}">
                 <span class="menu-icon">
                     <i class="mdi mdi-table-large"></i>
