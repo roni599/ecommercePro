@@ -63,3 +63,9 @@ Route::get('product_search', [HomeController::class, 'product_search'])->name('p
 Route::get('/bkash/payment', [App\Http\Controllers\BkashTokenizePaymentController::class, 'index']);
 Route::get('/bkash/create-payment/{price}', [App\Http\Controllers\BkashTokenizePaymentController::class, 'createPayment'])->name('bkash-create-payment.post');
 Route::get('/bkash/callback', [App\Http\Controllers\BkashTokenizePaymentController::class, 'callBack'])->name('bkash-callBack');
+// In web.php or your routes file
+Route::get('/order/{id}', [App\Http\Controllers\BkashTokenizePaymentController::class, 'showOrder'])->name('order.show');
+// In web.php or your routes file
+Route::get('/order/{id}/download-pdf', [App\Http\Controllers\BkashTokenizePaymentController::class, 'downloadPDF'])->name('order.download-pdf');
+
+

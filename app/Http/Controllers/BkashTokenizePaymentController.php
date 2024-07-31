@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Karim007\LaravelBkashTokenize\Facade\BkashPaymentTokenize;
 use Karim007\LaravelBkashTokenize\Facade\BkashRefundTokenize;
 
@@ -51,10 +55,42 @@ class BkashTokenizePaymentController extends Controller
             }
 
             if (isset($response['statusCode']) && $response['statusCode'] == "0000" && $response['transactionStatus'] == "Completed") {
-                /*
-                 * for refund need to store
-                 * paymentID and trxID
-                 * */
+
+                $user = Auth::user();
+                $userid = $user->id;
+                $datas = Cart::where('user_id', '=', $userid)->get();
+                foreach ($datas as $data) {
+                    $order = new Order();
+
+                    $order->name = $data->name;
+                    $order->email = $data->email;
+                    $order->phone = $data->phone;
+                    $order->address = $data->address;
+                    $order->user_id = $data->user_id;
+
+                    $order->product_title = $data->product_title;
+                    $order->quentity = $data->quentity;
+                    $order->price = $data->price;
+                    $order->image = $data->image;
+                    $order->product_id = $data->product_id;
+                    $order->payment_status = "Paid";
+                    $order->delivery_status = "processing";
+                    $order->trxID = $response['trxID'];
+
+                    $order->save();
+
+                    $cart_id = $data->id;
+                    $cart = Cart::find($cart_id);
+                    $cart->delete();
+
+
+                    // $userId = Auth::id();
+                    // $order = Order::where('user_id', $userId)->first();
+                    // $order->trxID = $response['trxID'];
+                    // $order->save();
+                }
+                // Redirect to the order confirmation page
+                return redirect()->route('order.show', ['id' => $order->id]);
                 return BkashPaymentTokenize::success('Thank you for your payment', $response['trxID']);
             }
             return BkashPaymentTokenize::failure($response['statusMessage']);
@@ -90,4 +126,26 @@ class BkashTokenizePaymentController extends Controller
         return BkashRefundTokenize::refundStatus($paymentID, $trxID);
         //return BkashRefundTokenize::refundStatus($paymentID,$trxID, 1); //last parameter is your account number for multi account its like, 1,2,3,4,cont..
     }
+
+    public function showOrder($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        return view('home.order_show', compact('order'));
+    }
+
+    public function downloadPDF($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        // $isPdf = true;
+        $pdf = Pdf::loadView('home.order-confirmation', compact('order',));
+        return $pdf->download('order-confirmation.pdf');
+    }
+
+    // public function downloadPdf($orderId)
+    // {
+    //     $order = Order::find($orderId);
+    //     $isPdf = true; // Set this flag when generating the PDF
+    //     $pdf = PDF::loadView('home.order_confirmation', compact('order', 'isPdf'));
+    //     return $pdf->download('order_confirmation.pdf');
+    // }
 }
